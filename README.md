@@ -1,2 +1,2 @@
 # eliminacoda
-Una semplice app in Flutter per la gestione di un sistema di elimina coda
+A simple app in Flutter for managing a queue elimination system
