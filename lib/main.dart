@@ -113,11 +113,9 @@ class _MyHomePageState extends State<MyHomePage> {
               height: bodyHeight,
               width: double.infinity,
               child: FittedBox(
-                //fit: BoxFit.contain,
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  _nrOrdine.toString().padLeft(
-                      4, '0'), // Assicurati che _title sia una stringa valida
+                  _nrOrdine.toString().padLeft(4, '0'),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: _isChangingColor ? Colors.black : Colors.white,
