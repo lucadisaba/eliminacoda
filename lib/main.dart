@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _nrOrdine = 0000;
   String _bottomScrollText =
       'SISTEMA CASSE TERABYTE SRLS - PER INFO CHIAMARE AL 3494289877 - SOFTWARE DEVELOPER: LUCA DI SABATINO -';
-  late bool _isEditing = false;
+  bool _isEditing = false;
   late final TextEditingController _textEditingController =
       TextEditingController(text: _nrOrdine.toString().padLeft(4, '0'));
   late FocusNode _focusNode;
@@ -80,7 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
       focusNode: _focusNode,
       onKey: handleKeyPress,
       child: Scaffold(
-        //resizeToAvoidBottomInset: false,
         //appbar
         appBar: AppBar(
           centerTitle: true,
@@ -184,9 +183,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.bottomCenter,
                 child: TextScroll(
                   _bottomScrollText,
-                  delayBefore: Duration(milliseconds: 500),
+                  delayBefore: const Duration(milliseconds: 500),
                   numberOfReps: 5280,
-                  pauseBetween: Duration(milliseconds: 50),
+                  pauseBetween: const Duration(milliseconds: 50),
                   style: const TextStyle(
                       backgroundColor: Colors.white,
                       color: Colors.black,
@@ -196,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   selectable: true,
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
-                  velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+                  velocity: const Velocity(pixelsPerSecond: Offset(50, 0)),
                 ),
               ),
             ),
@@ -231,7 +230,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _loadDataFromTextFile() async {
     try {
       final file = File('C:/ec/Configurazione.txt');
-      //final file = File('build/windows/runner/Release/Configurazione');
       final lines = await file.readAsLines();
 
       for (final line in lines) {
@@ -265,14 +263,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void _updateConfigFile(String newValue) async {
     try {
       final configFile = File('C:/ec/Configurazione.txt');
-      //final configFile = File('build/windows/runner/Release/Configurazione');
       final lines = await configFile.readAsLines();
 
       final updatedLines = lines.map((line) {
         final parts = line.split('=');
         if (parts.length == 2) {
           final key = parts[0].trim();
-          final value = parts[1].trim();
 
           if (key == 'ordine') {
             return '$key=$newValue';
@@ -450,8 +446,8 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         await flutterTts.speak(_title + text);
       }
-    } catch (e) {
-      print("Errore durante la sintesi vocale: $e");
+    } catch (e, stackTrace) {
+      _handleErrorAndExit(e, stackTrace);
     }
   }
 
