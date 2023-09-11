@@ -44,24 +44,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _title = 'SERVIAMO IL NUMERO';
-  //double _titleFontSize = 140.0;
-  int _nrOrdine = 0000;
-  String _bottomScrollText =
-      'SISTEMA CASSE TERABYTE SRLS - PER INFO CHIAMARE AL 3494289877 - SOFTWARE DEVELOPER: LUCA DI SABATINO -';
   bool _isEditing = false;
+  bool _isChangingColor = false;
+  bool _startColorChange = false;
+  bool _isFullscreen = false;
+  int _colorChangeDuration = 0;
+  //int _counterCharacters = 0;
+  int _nrOrdine = 0000;
+  late FlutterTts flutterTts;
+  late String numbersInItalian;
   late final TextEditingController _textEditingController =
       TextEditingController(text: _nrOrdine.toString().padLeft(4, '0'));
   late FocusNode _focusNode;
-  bool _isChangingColor = false;
-  bool _startColorChange = false;
+  String _title = 'SERVIAMO IL NUMERO';
+  String _bottomScrollText =
+      'SISTEMA CASSE TERABYTE SRLS - PER INFO CHIAMARE AL 3494289877 - SOFTWARE DEVELOPER: LUCA DI SABATINO -';
   Timer? _colorChangeTimer;
-  int _colorChangeDuration = 0;
-  late FlutterTts flutterTts;
-  bool _isFullscreen = false;
-  //int _counterCharacters = 0;
-
-  late String numbersInItalian;
 
   @override
   Widget build(BuildContext context) {
