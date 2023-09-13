@@ -44,22 +44,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _isEditing = false;
+  //double _titleFontSize = 140.0;
+  bool _isFullscreen = false;
   bool _isChangingColor = false;
   bool _startColorChange = false;
-  bool _isFullscreen = false;
+  bool _isEditing = false;
   int _colorChangeDuration = 0;
-  //int _counterCharacters = 0;
   int _nrOrdine = 0000;
-  late FlutterTts flutterTts;
-  late String numbersInItalian;
   late final TextEditingController _textEditingController =
       TextEditingController(text: _nrOrdine.toString().padLeft(4, '0'));
   late FocusNode _focusNode;
-  String _title = 'SERVIAMO IL NUMERO';
+  late FlutterTts flutterTts;
+  //int _counterCharacters = 0;
+  late String numbersInItalian;
   String _bottomScrollText =
       'SISTEMA CASSE TERABYTE SRLS - PER INFO CHIAMARE AL 3494289877 - SOFTWARE DEVELOPER: LUCA DI SABATINO -';
+  String _title = 'SERVIAMO IL NUMERO';
   Timer? _colorChangeTimer;
+  late bool _isAudioChiamata;
+  late bool _isAudioRipetizione;
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
     double bodyHeight = screenHeight * 0.70;
     double bottomBarHeight = screenHeight * 0.05;
 
-    //double availableHeight = screenHeight - appBarHeight;
-
-    //double screenWidth = MediaQuery.of(context).size.width;
-
-    //double fontSize = availableHeight * 0.50;
     return RawKeyboardListener(
       focusNode: _focusNode,
       onKey: handleKeyPress,
@@ -163,7 +161,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     _updateConfigFile(_nrOrdine.toString().padLeft(4, '0'));
                     _isEditing = false;
                     //_counterCharacters = 0;
-                    _parla(_nrOrdine.toString());
+                    if (_isAudioChiamata) {
+                      _parla(_nrOrdine.toString());
+                    }
                     _flashingBody(_startColorChange);
                   }
                 });
@@ -248,6 +248,14 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               _bottomScrollText = value;
             });
+          } else if (key == 'audioChiamata') {
+            setState(() {
+              _isAudioChiamata = bool.parse(value);
+            });
+          } else if (key == 'audioRipetizione') {
+            setState(() {
+              _isAudioRipetizione = bool.parse(value);
+            });
           }
         }
       }
@@ -296,7 +304,9 @@ class _MyHomePageState extends State<MyHomePage> {
         if (event.logicalKey.keyId == tastoCalcolatrice) {
           setState(() {
             _startColorChange = true;
-            _parla(_nrOrdine.toString());
+            if (_isAudioRipetizione) {
+              _parla(_nrOrdine.toString());
+            }
             _flashingBody(_startColorChange);
           });
         }
@@ -343,7 +353,9 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               _startColorChange = true;
             });
-            _parla(_nrOrdine.toString());
+            if (_isAudioRipetizione) {
+              _parla(_nrOrdine.toString());
+            }
             _flashingBody(_startColorChange);
             break;
 
@@ -382,8 +394,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _checkNrOrdine(_nrOrdine);
       _textEditingController.clear();
       //_parla(_title + _textEditingController.text);
-
-      _parla(_nrOrdine.toString());
+      if (_isAudioChiamata) {
+        _parla(_nrOrdine.toString());
+      }
       _flashingBody(_startColorChange);
       _updateConfigFile(_nrOrdine.toString().padLeft(4, '0'));
     });
@@ -396,7 +409,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _checkNrOrdine(_nrOrdine);
       _textEditingController.clear();
       //_parla(_title + _textEditingController.text);
-      _parla(_nrOrdine.toString());
+      if (_isAudioChiamata) {
+        _parla(_nrOrdine.toString());
+      }
       _flashingBody(_startColorChange);
       _updateConfigFile(_nrOrdine.toString().padLeft(4, '0'));
     });
