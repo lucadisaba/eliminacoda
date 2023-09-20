@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
-import 'package:text_scroll/text_scroll.dart';
+//import 'package:text_scroll/text_scroll.dart';
+import 'package:scrolling_text/scrolling_text.dart';
 //import 'package:auto_size_text_field/auto_size_text_field.dart';
 //import 'package:auto_size_text/auto_size_text.dart';
 
@@ -176,23 +177,25 @@ class _MyHomePageState extends State<MyHomePage> {
               height: bottomBarHeight,
               width: double.infinity,
               child: Align(
-                alignment: Alignment.bottomCenter,
-                child: TextScroll(
-                  _bottomScrollText,
-                  delayBefore: const Duration(milliseconds: 500),
-                  numberOfReps: 5280,
-                  pauseBetween: const Duration(milliseconds: 50),
-                  style: const TextStyle(
-                      backgroundColor: Colors.white,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                      height: 1.0),
-                  selectable: true,
-                  textDirection: TextDirection.ltr,
-                  textAlign: TextAlign.center,
-                  velocity: const Velocity(pixelsPerSecond: Offset(50, 0)),
-                ),
+                  alignment: Alignment.bottomCenter,
+                  child: ScrollingText(
+                    onFinish: () {
+                      var index = 0;
+                      if (index < _bottomScrollText.length) {
+                        index++;
+                      } else {
+                        index = 0;
+                      }
+                      setState(() {});
+                    },
+                    textStyle: const TextStyle(
+                        backgroundColor: Colors.white,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        height: 1.0),
+                    text: _bottomScrollText,
+                  )
               ),
             ),
           ),

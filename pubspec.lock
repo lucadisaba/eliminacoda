@@ -96,14 +96,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  isolate_flutter:
-    dependency: "direct main"
-    description:
-      name: isolate_flutter
-      sha256: "6c7a020a7a44205e1755c4096fd09b05fd36a24caa2c22ed81888b8b6958f12e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   js:
     dependency: transitive
     description:
@@ -160,6 +152,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.6"
+  scrolling_text:
+    dependency: "direct main"
+    description:
+      name: scrolling_text
+      sha256: c14e33ec3beea450815c4e6b382a805634833e29406dc782e6c5ca5aff73db34
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -213,14 +213,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  text_scroll:
-    dependency: "direct main"
-    description:
-      name: text_scroll
-      sha256: "7869d86a6fdd725dee56bdd150216a99f0372b82fbfcac319214dbd5f36e1908"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   vector_math:
     dependency: transitive
     description:
