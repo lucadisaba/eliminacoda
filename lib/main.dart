@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:eliminacoda/admin_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -195,8 +196,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontSize: 32,
                         height: 1.0),
                     text: _bottomScrollText,
-                  )
-              ),
+                  )),
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AdminDashboard()),
+                );
+              },
+              child: const Text('Go to admin route!'),
             ),
           ),
         ]),
