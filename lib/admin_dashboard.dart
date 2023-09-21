@@ -1,7 +1,38 @@
+import 'package:eliminacoda/home_screen.dart';
 import 'package:flutter/material.dart';
 
-class AdminDashboard extends StatelessWidget {
-  const AdminDashboard({Key? key});
+// ignore: must_be_immutable
+class AdminDashboard extends StatefulWidget {
+  late String cosaServire;
+  late int nrOrdine;
+  late String testoScorrimento;
+  late bool audioChiamata;
+  late bool audioRipetizione;
+
+  AdminDashboard(
+      {super.key,
+      required this.cosaServire,
+      required this.nrOrdine,
+      required this.testoScorrimento,
+      required this.audioChiamata,
+      required this.audioRipetizione});
+
+  @override
+  State<AdminDashboard> createState() => _AdminDashboardState();
+}
+
+class _AdminDashboardState extends State<AdminDashboard> {
+  TextEditingController cosaServireController = TextEditingController();
+  TextEditingController nrOrdineController = TextEditingController();
+  TextEditingController testoScorrimentoController = TextEditingController();
+
+  @override
+  void initState() {
+    cosaServireController.text = widget.cosaServire;
+    nrOrdineController.text = (widget.nrOrdine).toString();
+    testoScorrimentoController.text = widget.testoScorrimento;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +49,18 @@ class AdminDashboard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: TextField(
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: 'Inserisci cosa vuoi servire',
+                onChanged: (String newValue) {
+                  setState(() {
+                    widget.cosaServire = newValue;
+                  });
+                },
+                controller: cosaServireController,
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  labelText: 'Cosa vuoi servire',
                   labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -39,11 +76,12 @@ class AdminDashboard extends StatelessWidget {
                 maxLines: null, // Permette più righe di testo
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: TextField(
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
+                controller: nrOrdineController,
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   labelText: 'Inserisci il numero dell\'ordine',
                   labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
@@ -61,11 +99,12 @@ class AdminDashboard extends StatelessWidget {
               ),
             ),
             // Primo campo di testo per inserire un testo lungo
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: TextField(
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
+                controller: testoScorrimentoController,
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   labelText: 'Inserisci il testo dello sponsor',
                   labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
@@ -87,7 +126,7 @@ class AdminDashboard extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: DropdownButtonFormField<bool>(
                 style: const TextStyle(color: Colors.white),
-                value: true, // Valore predefinito
+                value: widget.audioChiamata, // Valore predefinito
                 onChanged: (bool? newValue) {
                   // Implementa la logica per gestire la selezione
                 },
@@ -124,7 +163,7 @@ class AdminDashboard extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: DropdownButtonFormField<bool>(
                 style: const TextStyle(color: Colors.white),
-                value: true, // Valore predefinito
+                value: widget.audioRipetizione, // Valore predefinito
                 onChanged: (bool? newValue) {
                   // Implementa la logica per gestire la selezione
                 },
@@ -166,7 +205,13 @@ class AdminDashboard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const AdminDashboard()),
+                      builder: (context) => MyHomePage(
+                            cosaServire: widget.cosaServire,
+                            nrOrdine: widget.nrOrdine,
+                            testoScorrimento: testoScorrimentoController.text,
+                            audioChiamata: widget.audioChiamata,
+                            audioRipetizione: widget.audioRipetizione,
+                          )),
                 );
               },
               child: const Text('Torna a servire!'),

@@ -29,7 +29,13 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.transparent,
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'SERVIAMO IL NUMERO:'),
+      home: MyHomePage(
+        cosaServire: '',
+        nrOrdine: 0000,
+        testoScorrimento: '',
+        audioChiamata: true,
+        audioRipetizione: true,
+      ),
     );
   }
 }
@@ -37,9 +43,19 @@ class MyApp extends StatelessWidget {
 // Schermata di ingresso, nel caso è la homePage, la schermata da cui devi partire!
 class MyHomePage extends StatefulWidget {
   // stateful vuol dire che ha uno stato suo interno
-  const MyHomePage({super.key, required this.title});
+  late String cosaServire;
+  late int nrOrdine;
+  late String testoScorrimento;
+  late bool audioChiamata;
+  late bool audioRipetizione;
 
-  final String title;
+  MyHomePage(
+      {super.key,
+      required this.cosaServire,
+      required this.nrOrdine,
+      required this.testoScorrimento,
+      required this.audioChiamata,
+      required this.audioRipetizione});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -57,14 +73,14 @@ class _MyHomePageState extends State<MyHomePage> {
       TextEditingController(text: _nrOrdine.toString().padLeft(4, '0'));
   late FocusNode _focusNode;
   late FlutterTts flutterTts;
+  late bool _isAudioChiamata;
+  late bool _isAudioRipetizione;
   //int _counterCharacters = 0;
   late String numbersInItalian;
   String _bottomScrollText =
       'SISTEMA CASSE TERABYTE SRLS - PER INFO CHIAMARE AL 3494289877 - SOFTWARE DEVELOPER: LUCA DI SABATINO -';
   String _title = 'SERVIAMO IL NUMERO';
   Timer? _colorChangeTimer;
-  late bool _isAudioChiamata;
-  late bool _isAudioRipetizione;
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +220,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AdminDashboard()),
+                  MaterialPageRoute(
+                      builder: (context) => AdminDashboard(
+                            cosaServire: _title,
+                            nrOrdine: _nrOrdine,
+                            testoScorrimento: _bottomScrollText,
+                            audioChiamata: _isAudioChiamata,
+                            audioRipetizione: _isAudioRipetizione,
+                          )),
                 );
               },
               child: const Text('Go to admin route!'),
